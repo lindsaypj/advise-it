@@ -15,5 +15,6 @@ function validToken(string $token) {
 }
 
 function generateToken() {
-    return "123ABC";
+    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return substr(str_shuffle($permitted_chars), 0, 6);
 }
