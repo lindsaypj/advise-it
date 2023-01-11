@@ -1,4 +1,28 @@
-<!DOCTYPE html>
+<?php
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Import functions
+include('../functions/functions.php');
+
+$token = "";
+
+// Check if get was submitted, check if token was passed through GET, check that token is valid
+if ($_SERVER['REQUEST_METHOD'] =! 'GET' || empty($_GET['token']) || !validToken($_GET['token'])) {
+    $token = generateToken();
+}
+// Token was passed and is valid
+else {
+    $token = $_GET['token'];
+}
+
+// Get data from database
+
+// Display data (if found)
+
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,19 +30,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Advise-IT</title>
+    <title>Advise-IT <?php echo $token; ?> Plan</title>
 </head>
 <body>
-    <div class="jumbotron">
-        <h1 class="display-4">Welcome to Advise-it</h1>
-        <p class="lead">This is a tool for the Advising Staff</p>
-        <hr class="my-4">
-        <p></p>
-        <!-- Button already here just need to send it somewhere on click -->
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/372/sprint-one/plan" role="button">Learn more</a>
-        </p>
-    </div>
+    <!-- Header -->
+    <h1>https://plindsay.greenriverdev.com/372/sprint-one/plan/</h1>
 
     <!-- JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
