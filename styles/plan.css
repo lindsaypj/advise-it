@@ -3,3 +3,7 @@
 .quarter-area {
     height: 250px !important;
 }
+
+.border-form-control {
+    border: 1px solid #ced4da;
+}

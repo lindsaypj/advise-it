@@ -40,18 +40,28 @@ else {
         <!-- Header -->
         <div class="row pb-4">
             <div class="col">
+                <!-- Homepage link -->
                 <a class="position-absolute" href="../">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
                         <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
                     </svg>
                 </a>
+                <!-- Token -->
                 <h1 class="text-center">Token: <?php echo $token; ?></h1>
+                <!-- Unique URL with token -->
                 <div class="d-block align-middle text-center">
-                    <div class="d-inline-block bg-light ps-3 rounded border-secondary">
-                        <h4 class="d-inline">
-                            https://plindsay.greenriverdev.com/372/sprint-one/plan/?token=<?php echo $token; ?>
-                        </h4>
-                        <button class="btn-secondary btn d-inline opacity-50">
+                    <div class="input-group mb-3 shadow-sm">
+                        <input
+                            type="text"
+                            class="form-control bg-light"
+                            aria-label="Current plan link"
+                            aria-describedby="copy-url"
+                            value="https://plindsay.greenriverdev.com/372/sprint-one/plan/?token=<?php echo $token; ?>"
+                            disabled
+                            aria-disabled="true"
+                        >
+
+                        <button class="btn btn-light btn-outline-secondary border-form-control" type="button" id="copy-url">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-plus" viewBox="0 0 16 16">
                                 <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z"/>
                                 <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z"/>
@@ -69,7 +79,7 @@ else {
                 <!-- FALL -->
                 <div class="col-md-6 col-12 pb-4">
                     <div class="form-floating">
-                        <textarea class="form-control quarter-area" placeholder="Leave a comment here" name="fall" id="fall"></textarea>
+                        <textarea class="form-control quarter-area shadow-sm" placeholder="Leave a comment here" name="fall" id="fall"></textarea>
                         <label for="fall">Fall</label>
                     </div>
                 </div>
@@ -77,7 +87,7 @@ else {
                 <!-- WINTER -->
                 <div class="col-md-6 col-12 pb-4">
                     <div class="form-floating">
-                        <textarea class="form-control quarter-area" placeholder="Leave a comment here" name="winter" id="winter"></textarea>
+                        <textarea class="form-control quarter-area shadow-sm" placeholder="Leave a comment here" name="winter" id="winter"></textarea>
                         <label for="winter">Winter</label>
                     </div>
                 </div>
@@ -85,7 +95,7 @@ else {
                 <!-- SPRING -->
                 <div class="col-md-6 col-12 pb-4">
                     <div class="form-floating">
-                        <textarea class="form-control quarter-area" placeholder="Leave a comment here" name="spring" id="spring"></textarea>
+                        <textarea class="form-control quarter-area shadow-sm" placeholder="Leave a comment here" name="spring" id="spring"></textarea>
                         <label for="spring">Spring</label>
                     </div>
                 </div>
@@ -93,7 +103,7 @@ else {
                 <!-- SUMMER -->
                 <div class="col-md-6 col-12 pb-4">
                     <div class="form-floating">
-                        <textarea class="form-control quarter-area" placeholder="Leave a comment here" name="summer" id="summer"></textarea>
+                        <textarea class="form-control quarter-area shadow-sm" placeholder="Leave a comment here" name="summer" id="summer"></textarea>
                         <label for="summer">Summer</label>
                     </div>
                 </div>
@@ -102,7 +112,7 @@ else {
 
             <div class="row">
                 <div class="col text-center">
-                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-primary shadow-sm" type="submit">Save</button>
                 </div>
             </div>
 
