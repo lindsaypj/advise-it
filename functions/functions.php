@@ -10,6 +10,8 @@ function validToken(string $token) {
     if (!ctype_alnum($token)) {
         return false;
     }
+
+    return true;
 }
 
 function generateToken() {
