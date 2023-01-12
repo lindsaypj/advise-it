@@ -7,3 +7,20 @@
 .border-form-control {
     border: 1px solid #ced4da;
 }
+
+.border-none {
+    border: none;
+}
+
+html, body {
+    background: rgb(248,249,250);
+}
+
+.token-url {
+    max-width: 700px;
+    margin: auto;
+}
+
+.toast-header svg {
+
+}
