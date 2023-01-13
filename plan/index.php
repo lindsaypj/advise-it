@@ -50,6 +50,7 @@ else {
     // Check if Token is stored in database
     if (!empty($plan['token'])) {
         $token = $plan['token'];
+        $lastUpdated = $plan['lastUpdated'];
         $planData = $plan;
     }
     // Invalid Token passed
@@ -118,7 +119,8 @@ else {
                     </div>
                 </div> <!-- Token URL -->
 
-                <h4 class="text-center"><?php if (!empty($lastUpdated)) echo "Last Updated: ".$lastUpdated; ?></h4>
+                <h4 class="text-center">
+                    <?php if (!empty($lastUpdated)) echo "Last Updated: ".$lastUpdated; ?></h4>
 
             </div> <!-- Col -->
         </div> <!-- Row -->
@@ -138,7 +140,15 @@ else {
                             placeholder="Leave a comment here"
                             name="fall"
                             id="fall"
-                        ><?php if ($formSubmitted) echo $_POST['fall']; ?></textarea>
+                        ><?php
+                            if ($formSubmitted) {
+                                echo $_POST['fall'];
+                            }
+                            else if (!empty($planData)) {
+                                echo $planData['fall'];
+                            }
+                        ?></textarea>
+
                         <label for="fall">Fall</label>
                     </div>
                 </div>
@@ -151,7 +161,14 @@ else {
                             placeholder="Leave a comment here"
                             name="winter"
                             id="winter"
-                        ><?php if ($formSubmitted) echo $_POST['winter']; ?></textarea>
+                        ><?php
+                            if ($formSubmitted) {
+                                echo $_POST['winter'];
+                            }
+                            else if (!empty($planData)) {
+                                echo $planData['winter'];
+                            }
+                            ?></textarea>
                         <label for="winter">Winter</label>
                     </div>
                 </div>
@@ -164,7 +181,14 @@ else {
                             placeholder="Leave a comment here"
                             name="spring"
                             id="spring"
-                        ><?php if ($formSubmitted) echo $_POST['spring']; ?></textarea>
+                        ><?php
+                            if ($formSubmitted) {
+                                echo $_POST['spring'];
+                            }
+                            else if (!empty($planData)) {
+                                echo $planData['spring'];
+                            }
+                            ?></textarea>
                         <label for="spring">Spring</label>
                     </div>
                 </div>
@@ -177,7 +201,14 @@ else {
                             placeholder="Leave a comment here"
                             name="summer"
                             id="summer"
-                        ><?php if ($formSubmitted) echo $_POST['summer']; ?></textarea>
+                        ><?php
+                            if ($formSubmitted) {
+                                echo $_POST['summer'];
+                            }
+                            else if (!empty($planData)) {
+                                echo $planData['summer'];
+                            }
+                            ?></textarea>
                         <label for="summer">Summer</label>
                     </div>
                 </div>
