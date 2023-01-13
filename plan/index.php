@@ -8,6 +8,7 @@ require_once $_SERVER["DOCUMENT_ROOT"].'/../config.php';
 
 // Import functions
 include('../functions/functions.php');
+include('../functions/formatting.php');
 
 $token = "";
 $formSubmitted = false;
@@ -24,18 +25,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
     }
 
     // Attempt to save data in POST to database
-    $saveSuccess = true;
+    if (is_array(getToken($token))) {
+        $saveSuccess = updatePlan();
+    }
+    else {
+        $saveSuccess = saveNewPlan();
+    }
 
-    // Get current timestamp
-//    $lastUpdated = date('Y-m-d h:i:s A');
-    $fmt = datefmt_create(
-        'en_US',
-        IntlDateFormatter::SHORT,
-        IntlDateFormatter::MEDIUM,
-        'America/Los_Angeles',
-        IntlDateFormatter::GREGORIAN
-    );
-    $lastUpdated = datefmt_format($fmt, time());
+    // Get current timestamp and format
+    $lastUpdated = formatTime(time());
 }
 // Check if token was passed through GET, check that token is valid
 else if (empty($_GET['token']) || !validToken($_GET['token'])) {
@@ -50,7 +48,7 @@ else {
     // Check if Token is stored in database
     if (!empty($plan['token'])) {
         $token = $plan['token'];
-        $lastUpdated = $plan['lastUpdated'];
+        $lastUpdated = formatTime($plan['lastUpdated']);
         $planData = $plan;
     }
     // Invalid Token passed
@@ -119,8 +117,8 @@ else {
                     </div>
                 </div> <!-- Token URL -->
 
-                <h4 class="text-center">
-                    <?php if (!empty($lastUpdated)) echo "Last Updated: ".$lastUpdated; ?></h4>
+                <!-- Last Updated -->
+                <h4 class="text-center"><?php if (!empty($lastUpdated)) echo "Last Updated: ".$lastUpdated; ?></h4>
 
             </div> <!-- Col -->
         </div> <!-- Row -->
