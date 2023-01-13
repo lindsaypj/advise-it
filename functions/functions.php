@@ -18,3 +18,15 @@ function generateToken() {
     $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return substr(str_shuffle($permitted_chars), 0, 6);
 }
+
+function getToken(string $token) {
+    // Access PDO from globals
+    global $dbh;
+
+    $sql = "SELECT * FROM plans WHERE token = :token";
+    $sql = $dbh->prepare($sql);
+    $sql->bindParam(':token', $token, PDO::PARAM_STR);
+    $sql->execute();
+
+    return $sql->fetch(PDO::FETCH_ASSOC);
+}

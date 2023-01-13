@@ -3,12 +3,16 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+// Create PDO for Database access
+require_once $_SERVER["DOCUMENT_ROOT"].'/../config.php';
+
 // Import functions
 include('../functions/functions.php');
 
 $token = "";
 $formSubmitted = false;
 $saveSuccess = false;
+$planData = null;
 
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
@@ -33,17 +37,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
     );
     $lastUpdated = datefmt_format($fmt, time());
 }
-// Check if get was submitted, check if token was passed through GET, check that token is valid
+// Check if token was passed through GET, check that token is valid
 else if (empty($_GET['token']) || !validToken($_GET['token'])) {
     $token = generateToken();
 }
-// Token was passed and is valid
 else {
-    $token = $_GET['token'];
+    // TOKEN IS PASSED AND VALID
+
+    // Get token data from database
+    $plan = getToken($_GET['token']);
+
+    // Check if Token is stored in database
+    if (!empty($plan['token'])) {
+        $token = $plan['token'];
+        $planData = $plan;
+    }
+    // Invalid Token passed
+    else {
+        header('location: ../');
+    }
 }
-
-// Get data from database
-
 // Display data (if found)
 
 ?>
