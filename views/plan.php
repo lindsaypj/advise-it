@@ -78,7 +78,14 @@
             <div class="row pb-4">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center mx-auto">
                     <div class="form-floating">
-                        <input type="text" class="form-control border-none shadow-sm" name="advisor" id="advisorInput" placeholder="Advisor">
+                        <input
+                            type="text"
+                            class="form-control border-none shadow-sm"
+                            value="{{ @advisor }}"
+                            name="advisor"
+                            id="advisorInput"
+                            placeholder="Advisor"
+                        >
                         <label for="advisorInput">Advisor:</label>
                     </div>
                 </div>

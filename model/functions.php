@@ -36,11 +36,12 @@ function saveNewPlan($token): bool {
     global $dbh;
 
     // Attempt to insert
-    $sql = "INSERT INTO plans (token, fall, winter, spring, summer, lastUpdated)
-            VALUES (:token, :fall, :winter, :spring, :summer, :lastUpdated)";
+    $sql = "INSERT INTO plans (token, fall, winter, spring, summer, lastUpdated, advisor)
+            VALUES (:token, :fall, :winter, :spring, :summer, :lastUpdated, :advisor)";
 
     $sql = $dbh->prepare($sql);
 
+    $advisor = $_POST['advisor'];
     $fall = $_POST['fall'];
     $winter = $_POST['winter'];
     $spring = $_POST['spring'];
@@ -48,6 +49,7 @@ function saveNewPlan($token): bool {
     $lastUpdated = time();
 
     $sql->bindParam(':token', $token, PDO::PARAM_STR);
+    $sql->bindParam(':advisor', $advisor, PDO::PARAM_STR);
     $sql->bindParam(':fall', $fall, PDO::PARAM_STR);
     $sql->bindParam(':winter', $winter, PDO::PARAM_STR);
     $sql->bindParam(':spring', $spring, PDO::PARAM_STR);
@@ -67,12 +69,13 @@ function updatePlan($token): bool {
             winter = :winter, 
             spring = :spring, 
             summer = :summer, 
-            lastUpdated = :lastUpdated
+            lastUpdated = :lastUpdated,
+            advisor = :advisor
             WHERE token = :token";
 
     $sql = $dbh->prepare($sql);
 
-    // Get
+    $advisor = $_POST['advisor'];
     $fall = $_POST['fall'];
     $winter = $_POST['winter'];
     $spring = $_POST['spring'];
@@ -80,6 +83,7 @@ function updatePlan($token): bool {
     $lastUpdated = time();
 
     $sql->bindParam(':token', $token, PDO::PARAM_STR);
+    $sql->bindParam(':advisor', $advisor, PDO::PARAM_STR);
     $sql->bindParam(':fall', $fall, PDO::PARAM_STR);
     $sql->bindParam(':winter', $winter, PDO::PARAM_STR);
     $sql->bindParam(':spring', $spring, PDO::PARAM_STR);

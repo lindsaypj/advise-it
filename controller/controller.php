@@ -80,6 +80,7 @@ class Controller
         $lastUpdated = null; // Variable to store most recent save time
         $formSubmitted = false; // Display submitted form data + confirmation
         $saveSuccess = false; // Determines state of confirmation message
+        $advisor = "";
         $fall = "";
         $winter = "";
         $spring = "";
@@ -107,6 +108,7 @@ class Controller
             // Get current timestamp and format
             $plan = getPlan($token);
             $lastUpdated = formatTime($plan['lastUpdated']);
+            $advisor = $plan['advisor'];
             $fall = $plan['fall'];
             $winter = $plan['winter'];
             $spring = $plan['spring'];
@@ -120,6 +122,7 @@ class Controller
             if (!empty($plan['token'])) {
                 $token = $plan['token'];
                 $lastUpdated = formatTime($plan['lastUpdated']);
+                $advisor = $plan['advisor'];
                 $fall = $plan['fall'];
                 $winter = $plan['winter'];
                 $spring = $plan['spring'];
@@ -136,6 +139,7 @@ class Controller
         $this->_f3->set('lastUpdated', $lastUpdated);
         $this->_f3->set('formSubmitted', $formSubmitted);
         $this->_f3->set('saveSuccess', $saveSuccess);
+        $this->_f3->set('advisor', $advisor);
         $this->_f3->set('fall', $fall);
         $this->_f3->set('winter', $winter);
         $this->_f3->set('spring', $spring);
