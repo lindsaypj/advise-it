@@ -10,5 +10,5 @@ function formatTime(int $time)
         'America/Los_Angeles',
         IntlDateFormatter::GREGORIAN
     );
-    return datefmt_format($fmt, time());
+    return datefmt_format($fmt, $time);
 }

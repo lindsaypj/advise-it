@@ -19,7 +19,7 @@ function generateToken() {
     return substr(str_shuffle($permitted_chars), 0, 6);
 }
 
-function getToken(string $token) {
+function getPlan(string $token) {
     // Access PDO from globals
     global $dbh;
 
@@ -31,11 +31,9 @@ function getToken(string $token) {
     return $sql->fetch(PDO::FETCH_ASSOC);
 }
 
-function saveNewPlan(): bool {
+function saveNewPlan($token): bool {
     // Access PDO from globals
     global $dbh;
-    global $token;
-
 
     // Attempt to insert
     $sql = "INSERT INTO plans (token, fall, winter, spring, summer, lastUpdated)
@@ -59,10 +57,9 @@ function saveNewPlan(): bool {
     return $sql->execute();
 }
 
-function updatePlan(): bool {
+function updatePlan($token): bool {
     // Access PDO from globals
     global $dbh;
-    global $token;
 
     // Attempt to insert
     $sql = "UPDATE plans SET 
@@ -91,4 +88,26 @@ function updatePlan(): bool {
 
     return $sql->execute();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

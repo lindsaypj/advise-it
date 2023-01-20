@@ -16,7 +16,7 @@
         <p></p>
         <!-- Button already here just need to send it somewhere on click -->
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/372/sprint-one/plan" role="button">Create New Plan</a>
+            <a class="btn btn-primary btn-lg" href="new-plan" role="button">Create New Plan</a>
         </p>
     </div>
 
