@@ -3,10 +3,10 @@
 // @token: unique identifier for a student and their plan
 // @lastUpdated: String representing the time the plan was last saved
 // @formSubmitted: Boolean indicating whether the user submitted the form
-// @planData: Previously saved Plan data to render (if $formSubmitted == true)
 // @saveSuccess: Boolean indicating whether the data was successfully stored in the database
 
 // Display data (if found)
+// @fall, @winter, @spring, @summer, @advisor
 ?>
 
 <html lang="en">
@@ -24,7 +24,7 @@
 <body>
     <div class="container bg-light">
         <!-- Header -->
-        <div class="row pb-4">
+        <div class="row pb-2">
             <div class="col">
                 <!-- Homepage link -->
                 <a class="position-absolute" href="/485/advise-it">
@@ -66,13 +66,6 @@
                     </div>
                 </div> <!-- Token URL -->
 
-                <!-- Last Updated -->
-                <h4 class="text-center">
-                    <check if="{{ @lastUpdated != null }}">
-                        Last Updated: {{ @lastUpdated }}
-                    </check>
-                </h4>
-
             </div> <!-- Col -->
         </div> <!-- Row -->
 
@@ -80,6 +73,16 @@
 
             <!-- Token Input -->
             <input type="hidden" name="token" value="{{ @token }}">
+
+            <!-- Advisor -->
+            <div class="row pb-4">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center mx-auto">
+                    <div class="form-floating">
+                        <input type="text" class="form-control border-none shadow-sm" name="advisor" id="advisorInput" placeholder="Advisor">
+                        <label for="advisorInput">Advisor:</label>
+                    </div>
+                </div>
+            </div>
 
             <!-- Plan -->
             <div class="row">
@@ -93,7 +96,7 @@
                             id="fall"
                         >{{ @fall }}</textarea>
 
-                        <label for="fall">Fall</label>
+                        <label for="fall">Fall:</label>
                     </div>
                 </div>
 
@@ -106,7 +109,7 @@
                             name="winter"
                             id="winter"
                         >{{ @winter }}</textarea>
-                        <label for="winter">Winter</label>
+                        <label for="winter">Winter:</label>
                     </div>
                 </div>
 
@@ -119,7 +122,7 @@
                             name="spring"
                             id="spring"
                         >{{ @spring }}</textarea>
-                        <label for="spring">Spring</label>
+                        <label for="spring">Spring:</label>
                     </div>
                 </div>
 
@@ -132,9 +135,19 @@
                             name="summer"
                             id="summer"
                         >{{ @summer }}</textarea>
-                        <label for="summer">Summer</label>
+                        <label for="summer">Summer:</label>
                     </div>
                 </div>
+
+                <!-- Last Updated -->
+                <div class="col-12">
+                    <h4 class="text-center mb-3">
+                        <check if="{{ @lastUpdated != null }}">
+                            Last Updated: {{ @lastUpdated }}
+                        </check>
+                    </h4>
+                </div>
+
 
             </div> <!-- Plan Row -->
 
