@@ -44,6 +44,11 @@ $f3->route('GET|POST /view-plan/@token', function($f3) {
     $GLOBALS['con']->viewPlan($f3->get('PARAMS.token'));
 });
 
+// Define View Plan page
+$f3->route('GET|POST /print-plan/@token', function($f3) {
+    $GLOBALS['con']->printPlan($f3->get('PARAMS.token'));
+});
+
 
 ////   RUN FAT FREE   ////
 

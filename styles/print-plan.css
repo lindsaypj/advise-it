@@ -1,0 +1,18 @@
+
+#printPlan {
+    display: none;
+}
+
+@media print {
+    body #printPlan {
+        display:block;
+    }
+
+    #printPlan p.plan-content {
+        white-space: pre-wrap;
+    }
+
+    body #planPage {
+        display: none;
+    }
+}

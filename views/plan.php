@@ -15,14 +15,17 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
     <!-- Styles -->
     <link rel="stylesheet" href="/485/advise-it/styles/plan.css">
+    <link rel="stylesheet" href="/485/advise-it/styles/print-plan.css">
 
     <title>Advise-IT {{ @token }} Plan</title>
 </head>
 <body>
-    <div class="container bg-light">
+    <div id="planPage" class="container bg-light">
         <!-- Header -->
         <div class="row pb-2">
             <div class="col">
@@ -80,7 +83,7 @@
         <form action="/485/advise-it/view-plan/{{ @token }}" method="post">
 
             <!-- Token Input -->
-            <input type="hidden" name="token" value="{{ @token }}">
+            <input id="tokenInput" type="hidden" name="token" value="{{ @token }}">
 
             <!-- Advisor -->
             <div class="row pb-4">
@@ -219,10 +222,70 @@
 
     </div> <!-- Container -->
 
+    <!-- Print -->
+    <div id="printPlan">
+        <!-- Token -->
+        <h1 class="text-center mt-3">Token: {{ @token }}</h1>
+
+        <!-- Unique URL with token -->
+        <div class="d-block align-middle text-center rounded token-url">
+            <div class="mb-3 text-center">
+                https://plindsay.greenriverdev.com/485/advise-it/view-plan/{{ @token }}
+            </div>
+        </div> <!-- Token URL -->
+
+        <!-- Advisor -->
+        <div class="row pb-4">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center mx-auto">
+                <div>
+                    <span class="fw-bold">Advisor:</span> {{ @advisor }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Plan -->
+        <div class="row">
+            <!-- FALL -->
+            <div class="col-6 p-4 pb-5 quarter-area">
+                <p class="mb-0 fw-bold">Fall:</p>
+                <p class="plan-content">{{ @fall }}</p>
+            </div>
+
+            <!-- WINTER -->
+            <div class="col-6 p-4 pb-5 quarter-area">
+                <p class="mb-0 fw-bold">Winter:</p>
+                <p class="plan-content">{{ @winter }}</p>
+            </div>
+
+            <!-- SPRING -->
+            <div class="col-6 p-4 pb-5 quarter-area">
+                <p class="mb-0 fw-bold">Spring:</p>
+                <p class="plan-content">{{ @spring }}</p>
+            </div>
+
+            <!-- SUMMER -->
+            <div class="col-6 p-4 pb-5 quarter-area">
+                <p class="mb-0 fw-bold">Summer:</p>
+                <p class="plan-content">{{ @summer }}</p>
+            </div>
+
+            <!-- Last Updated -->
+            <div class="col-12 mt-4">
+                <h4 class="text-center mb-3">
+                    <check if="{{ @lastUpdated != null }}">
+                        Last Updated: {{ @lastUpdated }}
+                    </check>
+                </h4>
+            </div>
+        </div> <!-- Plan Row -->
+    </div><!-- Print Div -->
+
     <!-- JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <!-- Print scripts -->
+    <script src="../scripts/printPlan.js"></script>
 
     <check if="{{ @formSubmitted }}">
         <script src="../scripts/saveNotification.js"></script>

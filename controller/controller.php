@@ -149,4 +149,22 @@ class Controller
         $view = new Template();
         echo $view->render('views/plan.php');
     }
+
+    function printPlan($token) {
+        if (validToken($token)) {
+            $plan = getPlan($token);
+
+            $this->_f3->set('token', $token);
+            $this->_f3->set('lastUpdated', $plan['lastUpdated']);
+            $this->_f3->set('advisor', $plan['advisor']);
+            $this->_f3->set('fall', $plan['fall']);
+            $this->_f3->set('winter', $plan['winter']);
+            $this->_f3->set('spring', $plan['spring']);
+            $this->_f3->set('summer', $plan['summer']);
+        }
+
+        // Render page
+        $view = new Template();
+        echo $view->render('views/print-plan.php');
+    }
 }
