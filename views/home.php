@@ -1,3 +1,11 @@
+<?php
+    // Advise-IT home page
+    // Introduces the Advise-IT tool and contains paths to new plan and
+    // admin pages.
+    // Author: Patrick Lindsay
+    // Date: 1/24/23
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

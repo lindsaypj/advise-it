@@ -1,10 +1,5 @@
 <?php
 
-// Create PDO for Database access
-require_once $_SERVER["DOCUMENT_ROOT"].'/../config.php';
-include('model/functions.php');
-include('model/formatter.php');
-
 /**
  * Controller handles the routing and form validation for all the
  * pages in the Advise-IT website
@@ -76,9 +71,10 @@ class Controller
             else if (array_key_exists($username, $logins)) {
                 if ($password == $logins[$username]) {
                     //Record the username in the session array
+                    $_SESSION['logged-in'] = true;
                     $_SESSION['username'] = $username;
 
-                    header('location: /admin');
+                    header('location: admin');
                 }
                 else {
                     // Invalid login (password) -- set flag variable
@@ -99,6 +95,23 @@ class Controller
         }
     }
 
+    /**
+     * Renders the admin page if the user is logged in
+     * Redirects user to home if not logged in
+     */
+    function admin() {
+        // Check that the user is logged in
+        if (!isset($_SESSION['logged-in']) || $_SESSION['logged-in'] != true || !isset($_SESSION['username'])) {
+            header('location: home');
+        }
+
+        // Get plan data
+        $plans = $GLOBALS['datalayer']->getPlans();
+        var_dump($plans);
+
+        $view = new Template();
+        echo $view->render('views/admin.php');
+    }
 
     /**
      * Generates a new token and displays the plan page.
@@ -106,11 +119,11 @@ class Controller
      */
     function newPlan()
     {
-        $token = generateToken();
+        $token = Functions::generateToken();
 
         // Prevent reusing tokens
-        while(!validToken($token) || is_array(getPlan($token))) {
-            $token = generateToken();
+        while(Validator::validToken($token) || is_array($GLOBALS['datalayer']->getPlan($token))) {
+            $token = Functions::generateToken();
         }
 
         $this->_f3->set('token', $token);
@@ -132,8 +145,8 @@ class Controller
     function viewPlan($token)
     {
         // If token is invalid, redirect to home
-        if (!validToken($token)) {
-            header('location: /');
+        if (Validator::validToken($token)) {
+            header('location: ./');
         }
 
         // Initialize Variables to determine rendering characteristics
@@ -151,23 +164,23 @@ class Controller
             $formSubmitted = true;
 
             // Store current token (if valid)
-            if (validToken($_POST['token'])) {
+            if (Validator::validToken($_POST['token'])) {
                 $token = $_POST['token'];
             }
 
             // Attempt to save data in POST to database
-            if (is_array(getPlan($token))) {
+            if (is_array($GLOBALS['datalayer']->getPlan($token))) {
                 // Plan is stored in database (UPDATE)
-                $saveSuccess = updatePlan($token);
+                $saveSuccess = $GLOBALS['datalayer']->updatePlan($token);
             }
             else {
                 // Plan was not already in database (INSERT)
-                $saveSuccess = saveNewPlan($token);
+                $saveSuccess = $GLOBALS['datalayer']->saveNewPlan($token);
             }
 
             // Get current timestamp and format
-            $plan = getPlan($token);
-            $lastUpdated = formatTime($plan['lastUpdated']);
+            $plan = $GLOBALS['datalayer']->getPlan($token);
+            $lastUpdated = Formatter::formatTime($plan['lastUpdated']);
             $advisor = $plan['advisor'];
             $fall = $plan['fall'];
             $winter = $plan['winter'];
@@ -176,12 +189,12 @@ class Controller
         }
         else {
             // Get token data from database
-            $plan = getPlan($token);
+            $plan = $GLOBALS['datalayer']->getPlan($token);
 
             // Check if Token is stored in database
             if (!empty($plan['token'])) {
                 $token = $plan['token'];
-                $lastUpdated = formatTime($plan['lastUpdated']);
+                $lastUpdated = Formatter::formatTime($plan['lastUpdated']);
                 $advisor = $plan['advisor'];
                 $fall = $plan['fall'];
                 $winter = $plan['winter'];
@@ -211,8 +224,8 @@ class Controller
     }
 
     function printPlan($token) {
-        if (validToken($token)) {
-            $plan = getPlan($token);
+        if (Validator::validToken($token)) {
+            $plan = $GLOBALS['datalayer']->getPlan($token);
 
             $this->_f3->set('token', $token);
             $this->_f3->set('lastUpdated', $plan['lastUpdated']);

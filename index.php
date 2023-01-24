@@ -12,7 +12,6 @@ error_reporting(E_ALL);
 
 // Require the autoload file
 require_once('vendor/autoload.php');
-require_once $_SERVER["DOCUMENT_ROOT"].'/../config.php';
 
 // Start Session
 session_start();
@@ -24,7 +23,7 @@ $f3 = Base::instance();
 $con = new Controller($f3);
 
 // Create Instance of DataLayer
-//$datalayer = new DataLayer();
+$datalayer = new DataLayer();
 
 
 ////   ROUTES   ////
@@ -33,14 +32,15 @@ $con = new Controller($f3);
 $f3->route('GET /', function() {
     $GLOBALS['con']->home();
 });
-// Define home route
-$f3->route('GET /home', function() {
-    $GLOBALS['con']->home();
-});
 
 // Define route to handle login attempts on home page (POST)
 $f3->route('POST /', function() {
     $GLOBALS['con']->loginAttempt();
+});
+
+// Define Admin route
+$f3->route('GET /admin', function() {
+    $GLOBALS['con']->admin();
 });
 
 // Define New Plan page
