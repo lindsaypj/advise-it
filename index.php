@@ -33,6 +33,15 @@ $con = new Controller($f3);
 $f3->route('GET /', function() {
     $GLOBALS['con']->home();
 });
+// Define home route
+$f3->route('GET /home', function() {
+    $GLOBALS['con']->home();
+});
+
+// Define route to handle login attempts on home page (POST)
+$f3->route('POST /', function() {
+    $GLOBALS['con']->loginAttempt();
+});
 
 // Define New Plan page
 $f3->route('GET|POST /new-plan', function($f3) {

@@ -39,6 +39,66 @@ class Controller
         echo $view->render('views/home.php');
     }
 
+    /**
+     * Processes the login attempt and directs the user to the correct page accordingly.
+     * If Login is successful, directs admin to admin page
+     * if unsuccessful, directs user back to home page with error message
+     */
+    function loginAttempt() {
+        $this->_f3->set('validLogin', false);
+        $this->_f3->set('cancelLink', "");
+        $this->_f3->set('username', "");
+
+        // If the form has been submitted
+        if (!empty($_POST)) {
+
+            //Get the form data
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            if (isset($username)) {
+                $this->_f3->set('username', $username);
+            }
+
+
+            // Validate not empty
+            if ($username === "" && $password === "") {
+                $this->_f3->set('errorMessage', "Please enter username and Password");
+            }
+
+
+            // Require the credentials file, which defines a $Logins array
+            require('/home/plindsay/users.php');
+            if (!isset($logins)) {
+                $this->_f3->set('errorMessage', "Failed to connect to server");
+            }
+            // If the username is in the array and the passwords match
+            else if (array_key_exists($username, $logins)) {
+                if ($password == $logins[$username]) {
+                    //Record the username in the session array
+                    $_SESSION['username'] = $username;
+
+                    header('location: /admin');
+                }
+                else {
+                    // Invalid login (password) -- set flag variable
+                    $this->_f3->set('errorMessage', "Invalid username or password");
+                }
+            }
+            else {
+                //Invalid login (username) -- set flag variable
+                if ($username !== "") {
+                    $this->_f3->set('errorMessage', "Invalid username or password");
+                }
+            }
+            // Failed to log in (Render Home page)
+            $this->_f3->set('displayForm', true);
+
+            $view = new Template();
+            echo $view->render('views/home.php');
+        }
+    }
+
 
     /**
      * Generates a new token and displays the plan page.
