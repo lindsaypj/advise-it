@@ -27,6 +27,24 @@ class DataLayer
         $this->_dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     }
 
+    /**
+     * Function to randomly generate a new token.
+     * Ensures that the token does not already exist
+     * @return string unique token for a new plan
+     */
+    function generateToken(): string
+    {
+        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $token = substr(str_shuffle($permitted_chars), 0, 6);
+
+        // Prevent reusing tokens
+        while(!(Validator::validToken($token)) || is_array($GLOBALS['datalayer']->getPlan($token))) {
+            $token = substr(str_shuffle($permitted_chars), 0, 6);;
+        }
+
+        return $token;
+    }
+
     function getPlan(string $token) {
         $sql = "SELECT * FROM plans WHERE token = :token";
         $sql = $this->_dbh->prepare($sql);

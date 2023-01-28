@@ -31,7 +31,8 @@ $con = new Controller($f3);
 
 // Define default route
 $f3->route('GET /', function() {
-    $GLOBALS['con']->home();
+    $newToken = $GLOBALS['datalayer']->generateToken();
+    $GLOBALS['con']->home($newToken);
 });
 
 // Define route to handle login attempts on home page (POST)
@@ -44,12 +45,7 @@ $f3->route('GET /admin', function() {
     $GLOBALS['con']->admin();
 });
 
-// Define New Plan page
-$f3->route('GET|POST /new-plan', function($f3) {
-    $GLOBALS['con']->newPlan();
-});
-
-// Define View Plan page
+// Define View Plan page (handles new plan also)
 $f3->route('GET|POST /view-plan/@token', function($f3) {
     $GLOBALS['con']->viewPlan($f3->get('PARAMS.token'));
 });

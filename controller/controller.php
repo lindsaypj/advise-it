@@ -28,8 +28,10 @@ class Controller
     /**
      * Displays the home page (default page)
      */
-    function home()
+    function home($newToken)
     {
+        $this->_f3->set('newToken', $newToken);
+
         $view = new Template();
         echo $view->render('views/home.php');
     }
@@ -114,31 +116,6 @@ class Controller
     }
 
     /**
-     * Generates a new token and displays the plan page.
-     * Saves to the load plan page.
-     */
-    function newPlan()
-    {
-        $token = Functions::generateToken();
-
-        // Prevent reusing tokens
-        while(!(Validator::validToken($token)) || is_array($GLOBALS['datalayer']->getPlan($token))) {
-            $token = Functions::generateToken();
-        }
-
-        $this->_f3->set('token', $token);
-
-        // Initialize Variables to determine rendering characteristics
-        $this->_f3->set('formSubmitted', false); // Display submitted form data + confirmation
-        $this->_f3->set('saveSuccess', false); // Determines state of confirmation message
-        $this->_f3->set('planData', null); // Variable to store the plan data
-
-        $view = new Template();
-        echo $view->render('views/plan.php');
-    }
-
-
-    /**
      * Loads a plan if the passed token is valid. Handles form validation,
      * and sends data to datalayer for storage if valid.
      */
@@ -146,7 +123,7 @@ class Controller
     {
         // If token is invalid, redirect to home
         if (!(Validator::validToken($token))) {
-            header('location: ');
+            header('location: ../');
         }
 
         // Initialize Variables to determine rendering characteristics
@@ -200,10 +177,6 @@ class Controller
                 $winter = $plan['winter'];
                 $spring = $plan['spring'];
                 $summer = $plan['summer'];
-            }
-            // Invalid Token passed
-            else {
-                header('location: ../');
             }
         }
 

@@ -32,7 +32,7 @@
         <p></p>
         <!-- Button already here just need to send it somewhere on click -->
         <p>
-            <a class="btn btn-primary btn-lg" href="new-plan" role="button">Create New Plan</a>
+            <a class="btn btn-primary btn-lg" href="view-plan/{{ @newToken }}" role="button">Create New Plan</a>
         </p>
     </div>
 
