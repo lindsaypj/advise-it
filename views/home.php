@@ -21,7 +21,7 @@
 </head>
 <body>
     <!-- Login Button -->
-    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#loginModal">
+    <button type="button" class="btn btn-primary float-end mt-4 me-5" data-bs-toggle="modal" data-bs-target="#loginModal">
         Admin
     </button>
     <!-- Header -->
