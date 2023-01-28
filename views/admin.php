@@ -20,6 +20,14 @@
     <title>Advise-IT Admin</title>
 </head>
 <body>
+    <div class="container">
+        <!-- Header -->
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mt-3">Admin Panel</h1>
+            </div>
+        </div>
+    </div>
 
 
 </body>

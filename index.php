@@ -16,14 +16,15 @@ require_once('vendor/autoload.php');
 // Start Session
 session_start();
 
+// Create Instance of DataLayer
+$datalayer = new DataLayer();
+
 // Create an instance of the base class
 $f3 = Base::instance();
 
 // Create Instance of Controller
 $con = new Controller($f3);
 
-// Create Instance of DataLayer
-$datalayer = new DataLayer();
 
 
 ////   ROUTES   ////
