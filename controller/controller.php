@@ -107,7 +107,7 @@ class Controller
 
         // Get plan data
         $plans = $GLOBALS['datalayer']->getPlans();
-        var_dump($plans);
+        $this->_f3->set('plans', $plans);
 
         $view = new Template();
         echo $view->render('views/admin.php');
@@ -122,7 +122,7 @@ class Controller
         $token = Functions::generateToken();
 
         // Prevent reusing tokens
-        while(Validator::validToken($token) || is_array($GLOBALS['datalayer']->getPlan($token))) {
+        while(!(Validator::validToken($token)) || is_array($GLOBALS['datalayer']->getPlan($token))) {
             $token = Functions::generateToken();
         }
 
@@ -145,8 +145,8 @@ class Controller
     function viewPlan($token)
     {
         // If token is invalid, redirect to home
-        if (Validator::validToken($token)) {
-            header('location: ./');
+        if (!(Validator::validToken($token))) {
+            header('location: ');
         }
 
         // Initialize Variables to determine rendering characteristics
