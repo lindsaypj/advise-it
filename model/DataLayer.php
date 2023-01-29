@@ -86,10 +86,16 @@ class DataLayer
             if ($quarter['quarter'] == 'fall') {
                 $offset = 1;
             }
+
             // Plan[schoolYears][2023][fall][notes] = "Some notes"
             $plan['schoolYears'][strval($quarter['year']+$offset)][$quarter['quarter']]['notes'] = $quarter['notes'];
             // Plan[schoolYears][2023][fall][calendarYear] = 2022
             $plan['schoolYears'][strval($quarter['year']+$offset)][$quarter['quarter']]['calendarYear'] = $quarter['year'];
+
+            // If data is found, mark year as containing data
+            if ($quarter['notes']) {
+                $plan['schoolYears'][$quarter['year']]['render'] = true;
+            }
         }
 
         return $plan;

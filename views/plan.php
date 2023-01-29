@@ -104,65 +104,67 @@
 
             <!-- Plan -->
             <repeat group="{{ @schoolYears }}" value="{{ @schoolYear }}">
-                <div class="row">
-                    <!-- School Year Header -->
-                    <div class="col-12 border-bottom mb-2 text-end">
-                        <h3>{{ @schoolYear['winter']['calendarYear'] }}</h3>
-                    </div>
-
-                    <!-- FALL -->
-                    <div class="col-md-6 col-12 pb-4">
-                        <div class="form-floating">
-                        <textarea
-                                class="form-control quarter-area shadow-sm border-none"
-                                placeholder="Leave a comment here"
-                                name="fall"
-                                id="fall"
-                        >{{ @schoolYear['fall']['notes'] }}</textarea>
-
-                            <label for="fall">Fall {{ @schoolYear['fall']['calendarYear'] }}</label>
+                <!-- Only render if data is present -->
+                <check if="{{ @schoolYear['render'] }}">
+                    <div class="row">
+                        <!-- School Year Header -->
+                        <div class="col-12 border-bottom mb-2 text-end">
+                            <h3>{{ @schoolYear['winter']['calendarYear'] }}</h3>
                         </div>
-                    </div>
 
-                    <!-- WINTER -->
-                    <div class="col-md-6 col-12 pb-4">
-                        <div class="form-floating">
-                        <textarea
-                                class="form-control quarter-area shadow-sm border-none"
-                                placeholder="Leave a comment here"
-                                name="winter"
-                                id="winter"
-                        >{{ @schoolYear['winter']['notes'] }}</textarea>
-                            <label for="winter">Winter {{ @schoolYear['winter']['calendarYear'] }}</label>
+                        <!-- FALL -->
+                        <div class="col-md-6 col-12 pb-4">
+                            <div class="form-floating">
+                                <textarea
+                                    class="form-control quarter-area shadow-sm border-none"
+                                    placeholder="Leave a comment here"
+                                    name="fall{{ @schoolYear['fall']['calendarYear'] }}"
+                                    id="fall{{ @schoolYear['fall']['calendarYear'] }}"
+                                >{{ @schoolYear['fall']['notes'] }}</textarea>
+                                <label for="fall{{ @schoolYear['fall']['calendarYear'] }}">Fall {{ @schoolYear['fall']['calendarYear'] }}</label>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- SPRING -->
-                    <div class="col-md-6 col-12 pb-4">
-                        <div class="form-floating">
-                        <textarea
-                                class="form-control quarter-area shadow-sm border-none"
-                                placeholder="Leave a comment here"
-                                name="spring"
-                                id="spring"
-                        >{{ @schoolYear['spring']['notes'] }}</textarea>
-                            <label for="spring">Spring {{ @schoolYear['spring']['calendarYear'] }}</label>
+                        <!-- WINTER -->
+                        <div class="col-md-6 col-12 pb-4">
+                            <div class="form-floating">
+                                <textarea
+                                    class="form-control quarter-area shadow-sm border-none"
+                                    placeholder="Leave a comment here"
+                                    name="winter{{ @schoolYear['winter']['calendarYear'] }}"
+                                    id="winter{{ @schoolYear['winter']['calendarYear'] }}"
+                                >{{ @schoolYear['winter']['notes'] }}</textarea>
+                                <label for="winter{{ @schoolYear['winter']['calendarYear'] }}">Winter {{ @schoolYear['winter']['calendarYear'] }}</label>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- SUMMER -->
-                    <div class="col-md-6 col-12 pb-4">
-                        <div class="form-floating">
-                        <textarea
-                                class="form-control quarter-area shadow-sm border-none"
-                                placeholder="Leave a comment here"
-                                name="summer"
-                                id="summer"
-                        >{{ @schoolYear['summer']['notes'] }}</textarea>
-                            <label for="summer">Summer {{ @schoolYear['summer']['calendarYear'] }}</label>
+                        <!-- SPRING -->
+                        <div class="col-md-6 col-12 pb-4">
+                            <div class="form-floating">
+                                <textarea
+                                    class="form-control quarter-area shadow-sm border-none"
+                                    placeholder="Leave a comment here"
+                                    name="spring{{ @schoolYear['spring']['calendarYear'] }}"
+                                    id="spring{{ @schoolYear['spring']['calendarYear'] }}"
+                                >{{ @schoolYear['spring']['notes'] }}</textarea>
+                                <label for="spring{{ @schoolYear['spring']['calendarYear'] }}">Spring {{ @schoolYear['spring']['calendarYear'] }}</label>
+                            </div>
                         </div>
-                    </div>
-                </div> <!-- Plan Year -->
+
+                        <!-- SUMMER -->
+                        <div class="col-md-6 col-12 pb-4">
+                            <div class="form-floating">
+                                <textarea
+                                    class="form-control quarter-area shadow-sm border-none"
+                                    placeholder="Leave a comment here"
+                                    name="summer{{ @schoolYear['summer']['calendarYear'] }}"
+                                    id="summer{{ @schoolYear['summer']['calendarYear'] }}"
+                                >{{ @schoolYear['summer']['notes'] }}</textarea>
+                                <label for="summer{{ @schoolYear['summer']['calendarYear'] }}">Summer {{ @schoolYear['summer']['calendarYear'] }}</label>
+                            </div>
+                        </div>
+                    </div> <!-- Plan Year -->
+                </check>
             </repeat>
 
             <!-- Last Updated -->
