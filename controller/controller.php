@@ -131,10 +131,7 @@ class Controller
         $formSubmitted = false; // Display submitted form data + confirmation
         $saveSuccess = false; // Determines state of confirmation message
         $advisor = "";
-        $fall = "";
-        $winter = "";
-        $spring = "";
-        $summer = "";
+        $schoolYears = [];
 
         // Check if form was submitted
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
@@ -154,30 +151,20 @@ class Controller
                 // Plan was not already in database (INSERT)
                 $saveSuccess = $GLOBALS['datalayer']->saveNewPlan($token);
             }
+        }
 
-            // Get current timestamp and format
-            $plan = $GLOBALS['datalayer']->getPlan($token);
+        // Get token data from database
+        $plan = $GLOBALS['datalayer']->getPlan($token);
+        var_dump($plan);
+
+        // Check if Token is stored in database
+        // (new plans are not in database)
+        if (!empty($plan['token'])) {
+
+            $token = $plan['token'];
             $lastUpdated = Formatter::formatTime($plan['lastUpdated']);
             $advisor = $plan['advisor'];
-            $fall = $plan['fall'];
-            $winter = $plan['winter'];
-            $spring = $plan['spring'];
-            $summer = $plan['summer'];
-        }
-        else {
-            // Get token data from database
-            $plan = $GLOBALS['datalayer']->getPlan($token);
-
-            // Check if Token is stored in database
-            if (!empty($plan['token'])) {
-                $token = $plan['token'];
-                $lastUpdated = Formatter::formatTime($plan['lastUpdated']);
-                $advisor = $plan['advisor'];
-                $fall = $plan['fall'];
-                $winter = $plan['winter'];
-                $spring = $plan['spring'];
-                $summer = $plan['summer'];
-            }
+            $schoolYears = $plan['schoolYears'];
         }
 
         // Pass data through F3 to be rendered
@@ -186,31 +173,10 @@ class Controller
         $this->_f3->set('formSubmitted', $formSubmitted);
         $this->_f3->set('saveSuccess', $saveSuccess);
         $this->_f3->set('advisor', $advisor);
-        $this->_f3->set('fall', $fall);
-        $this->_f3->set('winter', $winter);
-        $this->_f3->set('spring', $spring);
-        $this->_f3->set('summer', $summer);
+        $this->_f3->set('schoolYears', $schoolYears);
 
         // Render page
         $view = new Template();
         echo $view->render('views/plan.php');
-    }
-
-    function printPlan($token) {
-        if (Validator::validToken($token)) {
-            $plan = $GLOBALS['datalayer']->getPlan($token);
-
-            $this->_f3->set('token', $token);
-            $this->_f3->set('lastUpdated', $plan['lastUpdated']);
-            $this->_f3->set('advisor', $plan['advisor']);
-            $this->_f3->set('fall', $plan['fall']);
-            $this->_f3->set('winter', $plan['winter']);
-            $this->_f3->set('spring', $plan['spring']);
-            $this->_f3->set('summer', $plan['summer']);
-        }
-
-        // Render page
-        $view = new Template();
-        echo $view->render('views/print-plan.php');
     }
 }
