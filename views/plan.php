@@ -102,12 +102,19 @@
                 </div>
             </div>
 
+
+            <!-- Add Previous school year -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-primary" onclick="insertPrevSchoolYear()">Add Previous School Year</button>
+                </div>
+            </div>
             <!-- Plan -->
+            <div id="schoolYears">
             <repeat group="{{ @schoolYears }}" key="{{ @key }}" value="{{ @schoolYear }}">
-                <!-- Only render if data is present -->
+                <?php // Only render if data is present ?>
                 <check if="{{ @schoolYear['render'] }}">
-                    <div class="row">
-                        <!-- School Year Header -->
+                    <div id="{{ @key }}" class="row">
                         <div class="col-12 border-bottom mb-2 text-end">
                             <h3>{{ @schoolYear['winter']['calendarYear'] }}</h3>
                         </div>
@@ -189,9 +196,16 @@
                                 <label for="summer{{ @schoolYear['summer']['calendarYear'] }}">Summer {{ @schoolYear['summer']['calendarYear'] }}</label>
                             </div>
                         </div>
-                    </div> <!-- Plan Year -->
+                    </div>
                 </check>
             </repeat>
+            </div>
+            <!-- Add Next school year -->
+            <div class="row mb-3">
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-primary" onclick="insertNextSchoolYear()">Add Next School Year</button>
+                </div>
+            </div>
 
             <!-- Last Updated -->
             <div class="row">
@@ -320,8 +334,11 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-    <!-- Print scripts -->
+
+    <!-- Print script -->
     <script src="../scripts/printPlan.js"></script>
+    <!-- Adding school Years -->
+    <script src="../scripts/addYearsToForm.js"></script>
 
     <check if="{{ @formSubmitted }}">
         <script src="../scripts/saveNotification.js"></script>
