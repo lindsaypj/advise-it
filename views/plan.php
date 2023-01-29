@@ -285,7 +285,7 @@
         </div>
 
         <!-- Advisor -->
-        <div class="row pb-4">
+        <div class="row pb-2">
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center mx-auto">
                 <div>
                     <span class="fw-bold">Advisor:</span> {{ @advisor }}
@@ -303,25 +303,25 @@
                     </div>
 
                     <!-- FALL -->
-                    <div class="col-6 px-4 pb-5 quarter-area">
+                    <div class="col-6 px-4 pb-3 quarter-area">
                         <p class="mb-0 fw-bold">Fall {{ @schoolYear['fall']['calendarYear'] }}</p>
                         <p class="plan-content">{{ @schoolYear['fall']['notes'] }}</p>
                     </div>
 
                     <!-- WINTER -->
-                    <div class="col-6 px-4 pb-5 quarter-area">
+                    <div class="col-6 px-4 pb-3 quarter-area">
                         <p class="mb-0 fw-bold">Winter {{ @schoolYear['winter']['calendarYear'] }}</p>
                         <p class="plan-content">{{ @schoolYear['winter']['notes'] }}</p>
                     </div>
 
                     <!-- SPRING -->
-                    <div class="col-6 px-4 pb-5 quarter-area">
+                    <div class="col-6 px-4 pb-2 quarter-area">
                         <p class="mb-0 fw-bold">Spring {{ @schoolYear['spring']['calendarYear'] }}</p>
                         <p class="plan-content">{{ @schoolYear['spring']['notes'] }}</p>
                     </div>
 
                     <!-- SUMMER -->
-                    <div class="col-6 px-4 pb-5 quarter-area">
+                    <div class="col-6 px-4 pb-2 quarter-area">
                         <p class="mb-0 fw-bold">Summer {{ @schoolYear['summer']['calendarYear'] }}</p>
                         <p class="plan-content">{{ @schoolYear['summer']['notes'] }}</p>
                     </div>
