@@ -143,7 +143,7 @@ class Controller
             }
 
             // Attempt to save data in POST to database
-            if (is_array($GLOBALS['datalayer']->getPlan($token))) {
+            if ($GLOBALS['datalayer']->planExists($token)) {
                 // Plan is stored in database (UPDATE)
                 $saveSuccess = $GLOBALS['datalayer']->updatePlan($token);
             }

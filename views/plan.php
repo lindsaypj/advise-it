@@ -103,7 +103,7 @@
             </div>
 
             <!-- Plan -->
-            <repeat group="{{ @schoolYears }}" value="{{ @schoolYear }}">
+            <repeat group="{{ @schoolYears }}" key="{{ @key }}" value="{{ @schoolYear }}">
                 <!-- Only render if data is present -->
                 <check if="{{ @schoolYear['render'] }}">
                     <div class="row">
@@ -115,12 +115,20 @@
                         <!-- FALL -->
                         <div class="col-md-6 col-12 pb-4">
                             <div class="form-floating">
+                                <!-- Notes -->
                                 <textarea
                                     class="form-control quarter-area shadow-sm border-none"
                                     placeholder="Leave a comment here"
-                                    name="fall{{ @schoolYear['fall']['calendarYear'] }}"
+                                    name="schoolYears[{{ @key }}][fall][notes]"
                                     id="fall{{ @schoolYear['fall']['calendarYear'] }}"
                                 >{{ @schoolYear['fall']['notes'] }}</textarea>
+                                <!-- Calendar Year -->
+                                <input
+                                    type="hidden"
+                                    aria-hidden="true"
+                                    name="schoolYears[{{ @key }}][fall][calendarYear]"
+                                    value="{{ @schoolYear['fall']['calendarYear'] }}"
+                                >
                                 <label for="fall{{ @schoolYear['fall']['calendarYear'] }}">Fall {{ @schoolYear['fall']['calendarYear'] }}</label>
                             </div>
                         </div>
@@ -131,9 +139,15 @@
                                 <textarea
                                     class="form-control quarter-area shadow-sm border-none"
                                     placeholder="Leave a comment here"
-                                    name="winter{{ @schoolYear['winter']['calendarYear'] }}"
+                                    name="schoolYears[{{ @key }}][winter][notes]"
                                     id="winter{{ @schoolYear['winter']['calendarYear'] }}"
                                 >{{ @schoolYear['winter']['notes'] }}</textarea>
+                                <input
+                                    type="hidden"
+                                    aria-hidden="true"
+                                    name="schoolYears[{{ @key }}][winter][calendarYear]"
+                                    value="{{ @schoolYear['winter']['calendarYear'] }}"
+                                >
                                 <label for="winter{{ @schoolYear['winter']['calendarYear'] }}">Winter {{ @schoolYear['winter']['calendarYear'] }}</label>
                             </div>
                         </div>
@@ -144,9 +158,15 @@
                                 <textarea
                                     class="form-control quarter-area shadow-sm border-none"
                                     placeholder="Leave a comment here"
-                                    name="spring{{ @schoolYear['spring']['calendarYear'] }}"
+                                    name="schoolYears[{{ @key }}][spring][notes]"
                                     id="spring{{ @schoolYear['spring']['calendarYear'] }}"
                                 >{{ @schoolYear['spring']['notes'] }}</textarea>
+                                <input
+                                    type="hidden"
+                                    aria-hidden="true"
+                                    name="schoolYears[{{ @key }}][spring][calendarYear]"
+                                    value="{{ @schoolYear['spring']['calendarYear'] }}"
+                                >
                                 <label for="spring{{ @schoolYear['spring']['calendarYear'] }}">Spring {{ @schoolYear['spring']['calendarYear'] }}</label>
                             </div>
                         </div>
@@ -157,9 +177,15 @@
                                 <textarea
                                     class="form-control quarter-area shadow-sm border-none"
                                     placeholder="Leave a comment here"
-                                    name="summer{{ @schoolYear['summer']['calendarYear'] }}"
+                                    name="schoolYears[{{ @key }}][summer][notes]"
                                     id="summer{{ @schoolYear['summer']['calendarYear'] }}"
                                 >{{ @schoolYear['summer']['notes'] }}</textarea>
+                                <input
+                                    type="hidden"
+                                    aria-hidden="true"
+                                    name="schoolYears[{{ @key }}][summer][calendarYear]"
+                                    value="{{ @schoolYear['summer']['calendarYear'] }}"
+                                >
                                 <label for="summer{{ @schoolYear['summer']['calendarYear'] }}">Summer {{ @schoolYear['summer']['calendarYear'] }}</label>
                             </div>
                         </div>

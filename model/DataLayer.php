@@ -93,8 +93,8 @@ class DataLayer
             $plan['schoolYears'][strval($quarter['year']+$offset)][$quarter['quarter']]['calendarYear'] = $quarter['year'];
 
             // If data is found, mark year as containing data
-            if ($quarter['notes']) {
-                $plan['schoolYears'][$quarter['year']]['render'] = true;
+            if (!empty($quarter['notes'])) {
+                $plan['schoolYears'][strval($quarter['year']+$offset)]['render'] = true;
             }
         }
 
@@ -121,10 +121,14 @@ class DataLayer
             return false;
         }
 
-        return $this->saveYear();
+        foreach($_POST['schoolYears'] as $schoolYear) {
+            $this->saveYear($schoolYear, $token);
+        }
+
+        return true;
     }
 
-    function saveYear(): bool
+    function saveYear($schoolYear, $token): bool
     {
         $sql = "INSERT INTO quarters (token, year, quarter, notes)
                 VALUES (:token, :fallYear, 'fall', :fall),
@@ -134,14 +138,14 @@ class DataLayer
 
         $sql = $this->_dbh->prepare($sql);
 
-        $fall = $_POST['fall'];
-        $winter = $_POST['winter'];
-        $spring = $_POST['spring'];
-        $summer = $_POST['summer'];
-        $fallYear = 2022;
-        $winterYear = 2023;
-        $springYear = 2023;
-        $summerYear = 2023;
+        $fall = $schoolYear['fall']['notes'];
+        $winter = $schoolYear['winter']['notes'];
+        $spring = $schoolYear['spring']['notes'];
+        $summer = $schoolYear['summer']['notes'];
+        $fallYear = $schoolYear['fall']['calendarYear'];
+        $winterYear = $schoolYear['winter']['calendarYear'];
+        $springYear = $schoolYear['spring']['calendarYear'];
+        $summerYear = $schoolYear['summer']['calendarYear'];
 
         $sql->bindParam(':token', $token, PDO::PARAM_STR);
         $sql->bindParam(':fall', $fall, PDO::PARAM_STR);
@@ -156,14 +160,10 @@ class DataLayer
         return $sql->execute();
     }
 
-    function updatePlan($token): bool
+    function updatePlan($token)
     {
         // Attempt to insert
-        $sql = "UPDATE plans SET 
-            fall = :fall, 
-            winter = :winter, 
-            spring = :spring, 
-            summer = :summer, 
+        $sql = "UPDATE plans SET  
             lastUpdated = :lastUpdated,
             advisor = :advisor
             WHERE token = :token";
@@ -171,22 +171,58 @@ class DataLayer
         $sql = $this->_dbh->prepare($sql);
 
         $advisor = $_POST['advisor'];
-        $fall = $_POST['fall'];
-        $winter = $_POST['winter'];
-        $spring = $_POST['spring'];
-        $summer = $_POST['summer'];
         $lastUpdated = time();
 
         $sql->bindParam(':token', $token, PDO::PARAM_STR);
         $sql->bindParam(':advisor', $advisor, PDO::PARAM_STR);
+        $sql->bindParam(':lastUpdated', $lastUpdated, PDO::PARAM_INT);
+
+        // Attempt to save plan data
+        if ($sql->execute()) {
+            // Update all years and quarters passed
+            foreach ($_POST['schoolYears'] as $schoolYear) {
+                $this->updateYear($schoolYear, $token);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    function updateYear($schoolYear, $token): bool
+    {
+        $sql = "UPDATE quarters 
+                SET `notes` = CASE
+                    WHEN `quarter` = 'fall' AND `year` = :fallYear THEN :fall
+                    WHEN `quarter` = 'winter' AND `year` = :winterYear THEN :winter
+                    WHEN `quarter` = 'spring' AND `year` = :springYear THEN :spring
+                    WHEN `quarter` = 'summer' AND `year` = :summerYear THEN :summer
+                    END
+                WHERE `token` = :token";
+
+        $sql = $this->_dbh->prepare($sql);
+
+        $fall = strval($schoolYear['fall']['notes']);
+        $winter = $schoolYear['winter']['notes'];
+        $spring = $schoolYear['spring']['notes'];
+        $summer = $schoolYear['summer']['notes'];
+        $fallYear = $schoolYear['fall']['calendarYear'];
+        $winterYear = $schoolYear['winter']['calendarYear'];
+        $springYear = $schoolYear['spring']['calendarYear'];
+        $summerYear = $schoolYear['summer']['calendarYear'];
+
+        $sql->bindParam(':token', $token, PDO::PARAM_STR);
         $sql->bindParam(':fall', $fall, PDO::PARAM_STR);
         $sql->bindParam(':winter', $winter, PDO::PARAM_STR);
         $sql->bindParam(':spring', $spring, PDO::PARAM_STR);
         $sql->bindParam(':summer', $summer, PDO::PARAM_STR);
-        $sql->bindParam(':lastUpdated', $lastUpdated, PDO::PARAM_INT);
+        $sql->bindParam(':fallYear', $fallYear, PDO::PARAM_INT);
+        $sql->bindParam(':winterYear', $winterYear, PDO::PARAM_INT);
+        $sql->bindParam(':springYear', $springYear, PDO::PARAM_INT);
+        $sql->bindParam(':summerYear', $summerYear, PDO::PARAM_INT);
 
         return $sql->execute();
     }
+
 
     function getPlans()
     {
