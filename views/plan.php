@@ -279,10 +279,10 @@
 
         <!-- Unique URL with token -->
         <div class="d-block align-middle text-center rounded token-url">
-            <div class="mb-3 text-center">
+            <div class="mb-2 text-center">
                 https://plindsay.greenriverdev.com/485/advise-it/view-plan/{{ @token }}
             </div>
-        </div> <!-- Token URL -->
+        </div>
 
         <!-- Advisor -->
         <div class="row pb-4">
@@ -294,41 +294,50 @@
         </div>
 
         <!-- Plan -->
-        <div class="row">
-            <!-- FALL -->
-            <div class="col-6 p-4 pb-5 quarter-area">
-                <p class="mb-0 fw-bold">Fall:</p>
-                <p class="plan-content">{{ @fall }}</p>
-            </div>
+        <repeat group="{{ @schoolYears }}" key="{{ @key }}" value="{{ @schoolYear }}">
+            <check if="{{ @schoolYear['render'] }}">
+                <div class="row">
+                    <!-- Year Header -->
+                    <div class="col-12 border-bottom mb-2 text-end">
+                        <h3>{{ @schoolYear['winter']['calendarYear'] }}</h3>
+                    </div>
 
-            <!-- WINTER -->
-            <div class="col-6 p-4 pb-5 quarter-area">
-                <p class="mb-0 fw-bold">Winter:</p>
-                <p class="plan-content">{{ @winter }}</p>
-            </div>
+                    <!-- FALL -->
+                    <div class="col-6 px-4 pb-5 quarter-area">
+                        <p class="mb-0 fw-bold">Fall {{ @schoolYear['fall']['calendarYear'] }}</p>
+                        <p class="plan-content">{{ @schoolYear['fall']['notes'] }}</p>
+                    </div>
 
-            <!-- SPRING -->
-            <div class="col-6 p-4 pb-5 quarter-area">
-                <p class="mb-0 fw-bold">Spring:</p>
-                <p class="plan-content">{{ @spring }}</p>
-            </div>
+                    <!-- WINTER -->
+                    <div class="col-6 px-4 pb-5 quarter-area">
+                        <p class="mb-0 fw-bold">Winter {{ @schoolYear['winter']['calendarYear'] }}</p>
+                        <p class="plan-content">{{ @schoolYear['winter']['notes'] }}</p>
+                    </div>
 
-            <!-- SUMMER -->
-            <div class="col-6 p-4 pb-5 quarter-area">
-                <p class="mb-0 fw-bold">Summer:</p>
-                <p class="plan-content">{{ @summer }}</p>
-            </div>
+                    <!-- SPRING -->
+                    <div class="col-6 px-4 pb-5 quarter-area">
+                        <p class="mb-0 fw-bold">Spring {{ @schoolYear['spring']['calendarYear'] }}</p>
+                        <p class="plan-content">{{ @schoolYear['spring']['notes'] }}</p>
+                    </div>
 
-            <!-- Last Updated -->
-            <div class="col-12 mt-4">
-                <h4 class="text-center mb-3">
-                    <check if="{{ @lastUpdated != null }}">
-                        Last Updated: {{ @lastUpdated }}
-                    </check>
-                </h4>
-            </div>
-        </div> <!-- Plan Row -->
-    </div><!-- Print Div -->
+                    <!-- SUMMER -->
+                    <div class="col-6 px-4 pb-5 quarter-area">
+                        <p class="mb-0 fw-bold">Summer {{ @schoolYear['summer']['calendarYear'] }}</p>
+                        <p class="plan-content">{{ @schoolYear['summer']['notes'] }}</p>
+                    </div>
+                </div>
+            </check>
+        </repeat>
+
+        <!-- Last Updated -->
+        <div class="col-12 mt-4">
+            <h4 class="text-center mb-3">
+                <check if="{{ @lastUpdated != null }}">
+                    Last Updated: {{ @lastUpdated }}
+                </check>
+            </h4>
+        </div>
+    </div>
 
     <!-- JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
