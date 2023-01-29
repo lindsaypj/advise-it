@@ -155,7 +155,6 @@ class Controller
 
         // Get token data from database
         $plan = $GLOBALS['datalayer']->getPlan($token);
-        var_dump($plan);
 
         // Check if Token is stored in database
         // (new plans are not in database)

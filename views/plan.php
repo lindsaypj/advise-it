@@ -105,6 +105,11 @@
             <!-- Plan -->
             <repeat group="{{ @schoolYears }}" value="{{ @schoolYear }}">
                 <div class="row">
+                    <!-- School Year Header -->
+                    <div class="col-12 border-bottom mb-2 text-end">
+                        <h3>{{ @schoolYear['winter']['calendarYear'] }}</h3>
+                    </div>
+
                     <!-- FALL -->
                     <div class="col-md-6 col-12 pb-4">
                         <div class="form-floating">
