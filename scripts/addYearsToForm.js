@@ -1,14 +1,37 @@
 
 const schoolYears = document.getElementById("schoolYears");
+const prevYearBtn = document.getElementById("prevYearBtn");
+const nextYearBtn = document.getElementById("nextYearBtn");
 
-function insertNextSchoolYear() {
+// Handle next Year button click
+nextYearBtn.onclick = () => {
     const nextYear = parseInt(schoolYears.lastElementChild.id) + 1;
-    $(schoolYears).append(createNewYear(nextYear));
+
+    // Prevent adding years beyond 2040
+    if (nextYear <= 2040) {
+        $(schoolYears).append(createNewYear(nextYear));
+
+        // Remove button when max years reached
+        if (nextYear >= 2040) {
+            nextYearBtn.classList.add("d-none");
+        }
+    }
 }
 
-function insertPrevSchoolYear() {
-    const newFirstYear = parseInt(schoolYears.firstElementChild.id) - 1;
-    $(schoolYears).prepend(createNewYear(newFirstYear));
+// Handle previous Year button click
+prevYearBtn.onclick = () => {
+    const previousYear = parseInt(schoolYears.firstElementChild.id) - 1;
+    const currentYear = new Date().getFullYear()
+
+    // Prevent adding years beyond 2 years back
+    if (previousYear >= currentYear - 2) {
+        $(schoolYears).prepend(createNewYear(previousYear));
+
+        // Remove button when max years reached
+        if (previousYear <= currentYear -2) {
+            prevYearBtn.classList.add("d-none");
+        }
+    }
 }
 
 

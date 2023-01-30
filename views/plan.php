@@ -106,7 +106,7 @@
             <!-- Add Previous school year -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-primary" onclick="insertPrevSchoolYear()">Add Previous School Year</button>
+                    <button id="prevYearBtn" type="button" class="btn btn-primary">Add Previous School Year</button>
                 </div>
             </div>
             <!-- Plan -->
@@ -203,7 +203,7 @@
             <!-- Add Next school year -->
             <div class="row mb-3">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-primary" onclick="insertNextSchoolYear()">Add Next School Year</button>
+                    <button id="nextYearBtn" type="button" class="btn btn-primary">Add Next School Year</button>
                 </div>
             </div>
 
