@@ -87,6 +87,9 @@ class DataLayer
 
         $quarters = $sql->fetchAll(PDO::FETCH_ASSOC);
         if (empty($quarters)) {
+            if (!empty($plan['token'])) {
+                return $plan['schoolYears'] = self::createBlankPlan()['schoolYears'];
+            }
             return $plan;
         }
 
@@ -269,5 +272,30 @@ class DataLayer
 
         // Get query results
         return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    static function createBlankPlan() {
+        // Get data
+        $currentSchoolYear = self::getCurrentSchoolYear();
+
+        $plan['schoolYears'][$currentSchoolYear] = []; // Add current year
+        $plan['schoolYears'][$currentSchoolYear]['render'] = true; // Set year to render
+        $plan['schoolYears'][$currentSchoolYear]['fall']['notes'] = ""; // Initialize notes to empty
+        $plan['schoolYears'][$currentSchoolYear]['winter']['notes'] = "";
+        $plan['schoolYears'][$currentSchoolYear]['spring']['notes'] = "";
+        $plan['schoolYears'][$currentSchoolYear]['summer']['notes'] = "";
+        $plan['schoolYears'][$currentSchoolYear]['fall']['calendarYear'] = $currentSchoolYear - 1; // Set calendar Years
+        $plan['schoolYears'][$currentSchoolYear]['winter']['calendarYear'] = $currentSchoolYear;
+        $plan['schoolYears'][$currentSchoolYear]['spring']['calendarYear'] = $currentSchoolYear;
+        $plan['schoolYears'][$currentSchoolYear]['summer']['calendarYear'] = $currentSchoolYear;
+
+        return $plan;
+    }
+
+    static function getCurrentSchoolYear(): int {
+        if (idate("m") > 6) {
+            return idate("Y") + 1;
+        }
+        return idate ("Y");
     }
 }

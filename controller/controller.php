@@ -104,7 +104,7 @@ class Controller
     function admin() {
         // Check that the user is logged in
         if (!isset($_SESSION['logged-in']) || $_SESSION['logged-in'] != true || !isset($_SESSION['username'])) {
-            header('location: home');
+            header('location: ./');
         }
 
         // Get plan data
@@ -127,7 +127,7 @@ class Controller
         }
 
         // Initialize Variables to determine rendering characteristics
-        $lastUpdated = null; // Variable to store most recent save time
+        $lastUpdated = ""; // Variable to store most recent save time
         $formSubmitted = false; // Display submitted form data + confirmation
         $saveSuccess = false; // Determines state of confirmation message
         $advisor = "";
@@ -159,11 +159,14 @@ class Controller
         // Check if Token is stored in database
         // (new plans are not in database)
         if (!empty($plan['token'])) {
-
             $token = $plan['token'];
             $lastUpdated = Formatter::formatTime($plan['lastUpdated']);
             $advisor = $plan['advisor'];
             $schoolYears = $plan['schoolYears'];
+        }
+        // No plan data (display current blank year)
+        else {
+            $schoolYears = DataLayer::createBlankPlan()['schoolYears'];
         }
 
         // Pass data through F3 to be rendered
