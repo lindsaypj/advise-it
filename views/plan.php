@@ -51,6 +51,7 @@
                 <div class="d-block align-middle text-center rounded token-url">
                     <div class="input-group mb-3 shadow-sm rounded">
                         <input
+                            id="urlInput"
                             type="text"
                             class="form-control bg-white border-none"
                             aria-label="Current plan link"
@@ -348,6 +349,8 @@
     <script src="../scripts/printPlan.js"></script>
     <!-- Adding school Years -->
     <script src="../scripts/addYearsToForm.js"></script>
+    <!-- Copy URL to clipboard script -->
+    <script src="../scripts/copyToClipboard.js"></script>
 
     <check if="{{ @formSubmitted }}">
         <script src="../scripts/saveNotification.js"></script>
