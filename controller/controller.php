@@ -32,6 +32,13 @@ class Controller
     {
         $this->_f3->set('newToken', $newToken);
 
+        // Open login form if redirected
+        if ($_SESSION['displayLogin']) {
+            $this->_f3->set('displayForm', true);
+            // IMPORTANT! CLEAR VALUE
+            $_SESSION['displayLogin'] = false;
+        }
+
         $view = new Template();
         echo $view->render('views/home.php');
     }
@@ -104,9 +111,10 @@ class Controller
     function admin() {
         // Check that the user is logged in
         if (!isset($_SESSION['logged-in']) || $_SESSION['logged-in'] != true || !isset($_SESSION['username'])) {
+            // Failed to log in (Render Login on Home page)
+            $_SESSION['displayLogin'] = true;
             header('location: ./');
         }
-
         // Get plan data
         $plans = $GLOBALS['datalayer']->getPlans();
         $this->_f3->set('plans', $plans);
