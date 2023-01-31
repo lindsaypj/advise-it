@@ -3,6 +3,12 @@ const schoolYears = document.getElementById("schoolYears");
 const prevYearBtn = document.getElementById("prevYearBtn");
 const nextYearBtn = document.getElementById("nextYearBtn");
 
+// Hide buttons on load if limit is reached
+window.onload = () => {
+    hideNextYear();
+    hidePrevYear();
+}
+
 // Handle next Year button click
 nextYearBtn.onclick = () => {
     const nextYear = parseInt(schoolYears.lastElementChild.id) + 1;
@@ -10,11 +16,10 @@ nextYearBtn.onclick = () => {
     // Prevent adding years beyond 2040
     if (nextYear <= 2040) {
         $(schoolYears).append(createNewYear(nextYear));
-
-        // Remove button when max years reached
-        if (nextYear >= 2040) {
-            nextYearBtn.classList.add("d-none");
-        }
+    }
+    // Remove button when max years reached
+    if (nextYear >= 2040) {
+        nextYearBtn.classList.add("d-none");
     }
 }
 
@@ -26,11 +31,10 @@ prevYearBtn.onclick = () => {
     // Prevent adding years beyond 2 years back
     if (previousYear >= currentYear - 2) {
         $(schoolYears).prepend(createNewYear(previousYear));
-
-        // Remove button when max years reached
-        if (previousYear <= currentYear -2) {
-            prevYearBtn.classList.add("d-none");
-        }
+    }
+    // Remove button when max years reached
+    if (previousYear <= currentYear -2) {
+        prevYearBtn.classList.add("d-none");
     }
 }
 
@@ -120,4 +124,23 @@ function createNewYear(schoolYear) {
             </div>
         </div>
     </div>`;
+}
+
+function hideNextYear() {
+    const nextYear = parseInt(schoolYears.lastElementChild.id) + 1;
+
+    // Remove button when max years reached
+    if (nextYear >= 2040) {
+        nextYearBtn.classList.add("d-none");
+    }
+}
+
+function hidePrevYear() {
+    const previousYear = parseInt(schoolYears.firstElementChild.id) - 1;
+    const currentYear = new Date().getFullYear()
+
+    // Remove button when max years reached
+    if (previousYear <= currentYear -2) {
+        prevYearBtn.classList.add("d-none");
+    }
 }
