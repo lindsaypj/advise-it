@@ -131,7 +131,6 @@ class Controller
         $formSubmitted = false; // Display submitted form data + confirmation
         $saveSuccess = false; // Determines state of confirmation message
         $advisor = "";
-        $schoolYears = [];
 
         // Check if form was submitted
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
@@ -156,16 +155,14 @@ class Controller
         // Get token data from database
         $plan = $GLOBALS['datalayer']->getPlan($token);
 
-        // Check if Token is stored in database
-        // (new plans are not in database)
+        // Check if Token is stored in database (new plans are not in database)
         if (!empty($plan['token'])) {
             $token = $plan['token'];
             $lastUpdated = Formatter::formatTime($plan['lastUpdated']);
             $advisor = $plan['advisor'];
             $schoolYears = $plan['schoolYears'];
         }
-        // No plan data (display current blank year)
-        else {
+        else { // No plan data (display current blank year)
             $schoolYears = DataLayer::createBlankPlan()['schoolYears'];
         }
 

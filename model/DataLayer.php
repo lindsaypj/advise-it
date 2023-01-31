@@ -84,17 +84,16 @@ class DataLayer
         $sql->bindParam(':token', $token, PDO::PARAM_STR);
         $sql->execute();
 
-
         $quarters = $sql->fetchAll(PDO::FETCH_ASSOC);
         if (empty($quarters)) {
+            // If token is present but no quarter data is found
             if (!empty($plan['token'])) {
                 return $plan['schoolYears'] = self::createBlankPlan()['schoolYears'];
             }
             return $plan;
         }
 
-        // Parse Quarter data
-        // columns: token year quarter notes
+        // Parse Quarter data // columns: token, year, quarter, notes
         foreach ($quarters as $quarter) {
             // Calendar year offset
             $offset = 0;
@@ -112,8 +111,7 @@ class DataLayer
                 $plan['schoolYears'][strval($quarter['year']+$offset)]['render'] = true;
             }
         }
-
-        return $plan;
+        return $this->markMiddleYearsForRender($plan);
     }
 
     function saveNewPlan($token): bool
@@ -274,7 +272,8 @@ class DataLayer
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    static function createBlankPlan() {
+    static function createBlankPlan()
+    {
         // Get data
         $currentSchoolYear = self::getCurrentSchoolYear();
 
@@ -292,10 +291,38 @@ class DataLayer
         return $plan;
     }
 
-    static function getCurrentSchoolYear(): int {
+    static function getCurrentSchoolYear(): int
+    {
+        // If date is july or later, return next school year
         if (idate("m") > 6) {
             return idate("Y") + 1;
         }
+        // If date is before july, return current school year
         return idate ("Y");
+    }
+
+    private static function markMiddleYearsForRender($plan): array
+    {
+        $first = 3000;
+        $last = 0;
+
+        // Find lowest and highest years with data
+        foreach ($plan['schoolYears'] as $year) {
+            if ($year['render'] == true) {
+                if ($year['winter']['calendarYear'] < $first) {
+                    $first = $year['winter']['calendarYear'];
+                }
+                if ($year['winter']['calendarYear'] > $last) {
+                    $last = $year['winter']['calendarYear'];
+                }
+            }
+        }
+
+        // Mark middle years for render
+        for ($i = $first; $i < $last; $i++) {
+            $plan['schoolYears'][$i]['render'] = true;
+        }
+
+        return $plan;
     }
 }
